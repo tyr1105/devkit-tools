@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Sidebar } from "@/components/Sidebar";
+import { Footer } from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,9 +17,12 @@ const geistMono = Geist_Mono({
 const siteUrl = "https://tyr1105.github.io/devkit-tools";
 
 export const metadata: Metadata = {
-  title: "DevKit - Free Online Developer Tools | JSON, Base64, URL Encoder & More",
+  title: {
+    default: "DevKit Tools - Free Online Developer Toolkit | 开发者工具箱",
+    template: "%s | DevKit Tools",
+  },
   description:
-    "Free online developer tools: JSON formatter & validator, Base64 encoder/decoder, URL encoder/decoder, hash generator, and more. Fast, private, no installation required.",
+    "Free online developer tools: JSON formatter & validator, Base64 encoder/decoder, URL encoder/decoder, hash generator, QR code, timestamp converter, and more. Fast, private, no installation required.",
   keywords: [
     "developer tools",
     "online tools",
@@ -33,6 +38,10 @@ export const metadata: Metadata = {
     "devkit",
     "code tools",
     "text tools",
+    "QR code generator",
+    "timestamp converter",
+    "在线工具",
+    "开发者工具",
   ],
   authors: [{ name: "tyr1105" }],
   creator: "tyr1105",
@@ -60,9 +69,9 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName: "DevKit Developer Tools",
-    title: "DevKit - Free Online Developer Tools",
+    title: "DevKit Tools - Free Online Developer Toolkit",
     description:
-      "Free online developer tools: JSON formatter, Base64 encoder/decoder, URL encoder/decoder, hash generator, and more. Fast, private, no installation required.",
+      "Free online developer tools: JSON formatter, Base64 encoder/decoder, URL encoder/decoder, hash generator, QR code, and more.",
     images: [
       {
         url: `${siteUrl}/og-image.png`,
@@ -74,7 +83,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "DevKit - Free Online Developer Tools",
+    title: "DevKit Tools - Free Online Developer Toolkit",
     description:
       "Free online developer tools: JSON formatter, Base64 encoder/decoder, URL encoder/decoder, and more.",
     images: [`${siteUrl}/og-image.png`],
@@ -91,7 +100,7 @@ function JsonLd() {
     name: "DevKit Developer Tools",
     url: siteUrl,
     description:
-      "Free online developer tools: JSON formatter & validator, Base64 encoder/decoder, URL encoder/decoder, hash generator, and more.",
+      "Free online developer tools: JSON formatter & validator, Base64 encoder/decoder, URL encoder/decoder, hash generator, QR code, timestamp converter, and more.",
     applicationCategory: "DeveloperApplication",
     operatingSystem: "Any",
     offers: {
@@ -108,11 +117,16 @@ function JsonLd() {
       "JSON Formatter & Validator",
       "Base64 Encoder & Decoder",
       "URL Encoder & Decoder",
-      "Hash Generator",
-      "Text Transformation Tools",
+      "Hash Generator (MD5, SHA-1, SHA-256)",
+      "QR Code Generator",
+      "Timestamp Converter",
+      "Regex Tester",
+      "UUID Generator",
+      "Color Converter",
+      "Password Generator",
     ],
     browserRequirements: "Requires JavaScript. Requires HTML5.",
-    softwareVersion: "1.0.0",
+    softwareVersion: "2.0.0",
   };
 
   return (
@@ -130,13 +144,23 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="zh-CN"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
         <JsonLd />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <div className="flex flex-1">
+          <Sidebar />
+          <main className="flex-1 ml-0 lg:ml-64 min-h-screen">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+              {children}
+            </div>
+          </main>
+        </div>
+        <Footer />
+      </body>
     </html>
   );
 }
